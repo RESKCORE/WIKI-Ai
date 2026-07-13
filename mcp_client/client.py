@@ -49,12 +49,5 @@ class WikipediaMCPClient:
         result = future.result(timeout=30)
         return extract_text(result)
 
-    def list_tools(self) -> list:
-        future = asyncio.run_coroutine_threadsafe(
-            self._session.list_tools(), self._loop
-        )
-        return future.result(timeout=10).tools
-
-
 def extract_text(result) -> str:
     return "\n".join(item.text for item in result.content if hasattr(item, "text"))
